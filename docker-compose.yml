@@ -1,9 +1,6 @@
-# Terracraft : serveur Minecraft Java survie (Paper 26.3) déployé par Coolify
-# Variables à renseigner dans Coolify > Environment Variables :
-#   WHITELIST  pseudos Minecraft autorisés, séparés par des virgules
-#   OPS        pseudos administrateurs, séparés par des virgules
-#   MEMORY     RAM allouée à la JVM (défaut 6G)
-# SERVICE_PASSWORD_RCON est généré automatiquement par Coolify.
+# Terracraft : serveur Minecraft Java (Paper 26.3)
+# Variables : WHITELIST, OPS, MEMORY, MOTD, TZ (voir README)
+# SERVICE_PASSWORD_RCON est généré automatiquement au déploiement.
 
 services:
   mc:
@@ -11,13 +8,13 @@ services:
     restart: unless-stopped
     stop_grace_period: 2m
     ports:
-      - "25565:25565"       # Minecraft (TCP), à ouvrir sur la box
-      - "24454:24454/udp"   # Simple Voice Chat (UDP), à ouvrir sur la box
+      - "25565:25565"       # Minecraft (TCP)
+      - "24454:24454/udp"   # Simple Voice Chat (UDP)
     expose:
-      - "8100"              # BlueMap, publié par le proxy Coolify sur https://terracraft.aniss.xyz
+      - "8100"              # BlueMap (web), derrière reverse proxy
     environment:
       EULA: "TRUE"
-      TZ: Europe/Paris
+      TZ: ${TZ:-UTC}
 
       # Moteur et version
       TYPE: PAPER
@@ -26,14 +23,14 @@ services:
       # Quand une build STABLE sort, supprimer cette ligne.
       PAPER_CHANNEL: experimental
 
-      # Performances (Intel N100, 3 vCPU)
+      # Performances
       MEMORY: ${MEMORY:-6G}
       USE_AIKAR_FLAGS: "true"
       VIEW_DISTANCE: "10"
       SIMULATION_DISTANCE: "8"
 
       # Gameplay
-      MOTD: "Terracraft - survie entre potes"
+      MOTD: ${MOTD:-Terracraft}
       DIFFICULTY: normal
       MODE: survival
       MAX_PLAYERS: "10"
@@ -82,7 +79,7 @@ services:
     depends_on:
       - mc
     environment:
-      TZ: Europe/Paris
+      TZ: ${TZ:-UTC}
       RCON_HOST: mc
       RCON_PASSWORD: ${SERVICE_PASSWORD_RCON}
       INITIAL_DELAY: 15m
