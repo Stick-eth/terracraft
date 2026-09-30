@@ -52,7 +52,7 @@ services:
         chunky
       # EssentialsX : build dev compatible 26.3 (pas encore de release stable)
       PLUGINS: https://ci.ender.zone/job/EssentialsX/1830/artifact/jars/EssentialsX-2.22.1-dev%2B25-cfb6f12.jar
-      PATCH_DEFINITIONS: /patches
+      PATCH_DEFINITIONS: /patches/patches.json
 
       # Commandes rejouées à chaque démarrage (idempotentes)
       RCON_CMDS_STARTUP: |-
