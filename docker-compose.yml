@@ -55,6 +55,7 @@ services:
       PATCH_DEFINITIONS: /patches/patches.json
 
       # Commandes rejouées à chaque démarrage (idempotentes)
+      # Groupe admin : tout sauf créatif, give (et équivalents) et escalade de droits
       RCON_CMDS_STARTUP: |-
         gamerule players_sleeping_percentage 50
         lp group default permission set essentials.home true
@@ -68,8 +69,33 @@ services:
         lp group default permission set essentials.tpdeny true
         lp group default permission set essentials.tpacancel true
         lp group default permission set essentials.back true
-
-      ENABLE_ROLLING_LOGS: "TRUE"
+        lp creategroup admin
+        lp group admin permission set * true
+        lp group admin permission set luckperms.* false
+        lp group admin permission set minecraft.command.op false
+        lp group admin permission set minecraft.command.deop false
+        lp group admin permission set essentials.sudo false
+        lp group admin permission set minecraft.command.execute false
+        lp group admin permission set minecraft.command.gamemode false
+        lp group admin permission set minecraft.command.defaultgamemode false
+        lp group admin permission set essentials.gamemode.all false
+        lp group admin permission set essentials.gamemode.creative false
+        lp group admin permission set minecraft.command.give false
+        lp group admin permission set minecraft.command.item false
+        lp group admin permission set minecraft.command.loot false
+        lp group admin permission set minecraft.command.summon false
+        lp group admin permission set minecraft.command.setblock false
+        lp group admin permission set minecraft.command.fill false
+        lp group admin permission set minecraft.command.clone false
+        lp group admin permission set minecraft.command.place false
+        lp group admin permission set minecraft.command.data false
+        lp group admin permission set essentials.give false
+        lp group admin permission set essentials.item false
+        lp group admin permission set essentials.more false
+        lp group admin permission set essentials.kit false
+        lp group admin permission set essentials.skull false
+        lp group admin permission set essentials.spawnmob false
+        lp group admin permission set essentials.spawner false
     volumes:
       - mc-data:/data
 
