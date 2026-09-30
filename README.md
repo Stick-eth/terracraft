@@ -1,6 +1,6 @@
 # Terracraft
 
-Serveur Minecraft Java en Docker Compose.
+Serveur Minecraft Java **survie** déployé sur Coolify depuis ce repo (Docker Compose). Aucune intervention manuelle, de la rédaction des fichiers de config au déploiement : pipeline 100% agentique IA.
 
 ## Stack
 
