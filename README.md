@@ -1,6 +1,6 @@
 # Terracraft
 
-Serveur Minecraft Java **survie** pour une bande de 6 potes, déployé sur Coolify depuis ce repo.
+Serveur Minecraft Java **survie**  déployé sur Coolify depuis ce repo. Aucune intervention manuelle de la rédaction du fichier de config au déploiment : pipeline 100% agentique IA.
 
 | | |
 |---|---|
