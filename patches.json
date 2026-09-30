@@ -1,0 +1,17 @@
+{
+  "patches": [
+    {
+      "file": "/data/plugins/Essentials/config.yml",
+      "ops": [
+        { "$set": { "path": "$.newbies.kit", "value": "" } }
+      ]
+    },
+    {
+      "file": "/data/config/paper-world-defaults.yml",
+      "ops": [
+        { "$set": { "path": "$.environment['optimize-explosions']", "value": true, "value-type": "bool" } },
+        { "$set": { "path": "$.hopper['disable-move-event']", "value": true, "value-type": "bool" } }
+      ]
+    }
+  ]
+}

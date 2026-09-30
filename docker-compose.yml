@@ -1,0 +1,100 @@
+# Terracraft : serveur Minecraft Java survie (Paper 26.3) déployé par Coolify
+# Variables à renseigner dans Coolify > Environment Variables :
+#   WHITELIST  pseudos Minecraft autorisés, séparés par des virgules
+#   OPS        pseudos administrateurs, séparés par des virgules
+#   MEMORY     RAM allouée à la JVM (défaut 6G)
+# SERVICE_PASSWORD_RCON est généré automatiquement par Coolify.
+
+services:
+  mc:
+    build: .
+    restart: unless-stopped
+    stop_grace_period: 2m
+    ports:
+      - "25565:25565"       # Minecraft (TCP), à ouvrir sur la box
+      - "24454:24454/udp"   # Simple Voice Chat (UDP), à ouvrir sur la box
+    expose:
+      - "8100"              # BlueMap, publié par le proxy Coolify sur https://terracraft.aniss.xyz
+    environment:
+      EULA: "TRUE"
+      TZ: Europe/Paris
+
+      # Moteur et version
+      TYPE: PAPER
+      VERSION: "26.3"
+      # Paper 26.3 n'a que des builds BETA pour l'instant.
+      # Quand une build STABLE sort, supprimer cette ligne.
+      PAPER_CHANNEL: experimental
+
+      # Performances (Intel N100, 3 vCPU)
+      MEMORY: ${MEMORY:-6G}
+      USE_AIKAR_FLAGS: "true"
+      VIEW_DISTANCE: "10"
+      SIMULATION_DISTANCE: "8"
+
+      # Gameplay
+      MOTD: "Terracraft - survie entre potes"
+      DIFFICULTY: normal
+      MODE: survival
+      MAX_PLAYERS: "10"
+      SPAWN_PROTECTION: "0"
+      ALLOW_FLIGHT: "TRUE"     # évite les kicks "flying is not enabled" en cas de lag (elytra, chevaux)
+
+      # Accès
+      ENABLE_WHITELIST: "TRUE"
+      ENFORCE_WHITELIST: "TRUE"
+      WHITELIST: ${WHITELIST}
+      OPS: ${OPS}
+      RCON_PASSWORD: ${SERVICE_PASSWORD_RCON}
+
+      # Plugins (téléchargés automatiquement au démarrage)
+      MODRINTH_PROJECTS: |
+        luckperms
+        bluemap
+        simple-voice-chat
+        chunky
+      # EssentialsX : build dev compatible 26.3 (pas encore de release stable)
+      PLUGINS: https://ci.ender.zone/job/EssentialsX/1830/artifact/jars/EssentialsX-2.22.1-dev%2B25-cfb6f12.jar
+      PATCH_DEFINITIONS: /patches
+
+      # Commandes rejouées à chaque démarrage (idempotentes)
+      RCON_CMDS_STARTUP: |-
+        gamerule players_sleeping_percentage 50
+        lp group default permission set essentials.home true
+        lp group default permission set essentials.sethome true
+        lp group default permission set essentials.sethome.multiple true
+        lp group default permission set essentials.delhome true
+        lp group default permission set essentials.renamehome true
+        lp group default permission set essentials.tpa true
+        lp group default permission set essentials.tpahere true
+        lp group default permission set essentials.tpaccept true
+        lp group default permission set essentials.tpdeny true
+        lp group default permission set essentials.tpacancel true
+        lp group default permission set essentials.back true
+
+      ENABLE_ROLLING_LOGS: "TRUE"
+    volumes:
+      - mc-data:/data
+
+  backups:
+    image: itzg/mc-backup
+    restart: unless-stopped
+    depends_on:
+      - mc
+    environment:
+      TZ: Europe/Paris
+      RCON_HOST: mc
+      RCON_PASSWORD: ${SERVICE_PASSWORD_RCON}
+      INITIAL_DELAY: 15m
+      BACKUP_INTERVAL: 12h
+      PRUNE_BACKUPS_DAYS: "5"
+      PAUSE_IF_NO_PLAYERS: "true"
+      TAR_COMPRESS_METHOD: zstd
+      EXCLUDES: "*.jar,cache,logs,*.tmp,bluemap,libraries,versions"
+    volumes:
+      - mc-data:/data:ro
+      - mc-backups:/backups
+
+volumes:
+  mc-data:
+  mc-backups:
