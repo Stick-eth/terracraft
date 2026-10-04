@@ -6,6 +6,7 @@ Serveur Minecraft Java **survie** déployé sur Coolify depuis ce repo (Docker C
 
 - Minecraft Java **26.3**, serveur [Paper](https://papermc.io) via [itzg/minecraft-server](https://github.com/itzg/docker-minecraft-server) (Java 25, flags Aikar)
 - Plugins téléchargés au démarrage : EssentialsX, LuckPerms, BlueMap, Simple Voice Chat, Chunky
+- Chunk loading : `/forceload` autorisé pour tous les joueurs, serveur jamais en pause à vide, activation range à 0 pour animaux, villageois, items et créatures aquatiques (fermes actives sans joueur à proximité)
 - Sauvegardes : [itzg/mc-backup](https://github.com/itzg/docker-mc-backup) (tar zstd, rotation)
 
 ## Ports

@@ -3,14 +3,64 @@
     {
       "file": "/data/plugins/Essentials/config.yml",
       "ops": [
-        { "$set": { "path": "$.newbies.kit", "value": "" } }
+        {
+          "$set": {
+            "path": "$.newbies.kit",
+            "value": ""
+          }
+        }
       ]
     },
     {
       "file": "/data/config/paper-world-defaults.yml",
       "ops": [
-        { "$set": { "path": "$.environment['optimize-explosions']", "value": true, "value-type": "bool" } },
-        { "$set": { "path": "$.hopper['disable-move-event']", "value": true, "value-type": "bool" } }
+        {
+          "$set": {
+            "path": "$.environment['optimize-explosions']",
+            "value": true,
+            "value-type": "bool"
+          }
+        },
+        {
+          "$set": {
+            "path": "$.hopper['disable-move-event']",
+            "value": true,
+            "value-type": "bool"
+          }
+        }
+      ]
+    },
+    {
+      "file": "/data/spigot.yml",
+      "ops": [
+        {
+          "$set": {
+            "path": "$['world-settings']['default']['entity-activation-range']['animals']",
+            "value": 0,
+            "value-type": "int"
+          }
+        },
+        {
+          "$set": {
+            "path": "$['world-settings']['default']['entity-activation-range']['villagers']",
+            "value": 0,
+            "value-type": "int"
+          }
+        },
+        {
+          "$set": {
+            "path": "$['world-settings']['default']['entity-activation-range']['misc']",
+            "value": 0,
+            "value-type": "int"
+          }
+        },
+        {
+          "$set": {
+            "path": "$['world-settings']['default']['entity-activation-range']['water']",
+            "value": 0,
+            "value-type": "int"
+          }
+        }
       ]
     }
   ]
