@@ -71,6 +71,9 @@ services:
         lp group default permission set essentials.tpacancel true
         lp group default permission set essentials.back true
         lp group default permission set minecraft.command.forceload true
+        lp group default permission set essentials.fly false
+        lp group default permission set essentials.fly.others false
+        lp group default permission set essentials.fly.safelogin false
         lp creategroup admin
         lp group admin permission set * true
         lp group admin permission set luckperms.* false
